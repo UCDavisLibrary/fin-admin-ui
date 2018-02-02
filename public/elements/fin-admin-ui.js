@@ -5,6 +5,7 @@ import "../lib"
 import FinInterface from "./interfaces/FinInterface"
 
 import "./fin-editor"
+import "./header/app-header"
 
 export default class FinAdminUi extends Mixin(PolymerElement)
   .with(EventInterface, FinInterface) {
@@ -26,24 +27,25 @@ export default class FinAdminUi extends Mixin(PolymerElement)
     // parse config from url
     let jwt = this._getParameterByName('token');
     let fcUrl = this._getParameterByName('fcUrl');
-    fcUrl = new URL(fcUrl);
-    let cwd = fcUrl.pathname.replace(this._getApiConfig().fcBasePath, '');
+    let config = {};
 
-    this._setCwd(cwd);
-    this._setApiConfig({
-      host: fcUrl.protocol+'//'+fcUrl.host,
-      jwt : jwt
-    });
+    if( jwt ) config.jwt = jwt;
+    if( fcUrl ) {
+      fcUrl = new URL(fcUrl);
+      let cwd = fcUrl.pathname.replace(this._getApiConfig().fcBasePath, '');
+  
+      this._setCwd(cwd);
+      config.host = fcUrl.protocol+'//'+fcUrl.host;
+    }
+
+    this._setApiConfig(config);
 
     // clear the url
-    // window.history.pushState({}, 'Fin Editor', '/');
-
-    this.init();
+    window.history.pushState({}, 'Fin Editor', '/');
   }
 
-  async init() {
-    let container = await this._getContainer(this._getCwd());
-    // console.log(container.payload.body);
+  async _onCwdUpdate() {
+    await this._getContainer(this._getCwd());
   }
 
   _getParameterByName(name, url) {

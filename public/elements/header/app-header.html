@@ -1,0 +1,25 @@
+<style>
+  :host {
+    display: block;
+    height: 50px;
+    border-bottom: 1px solid #333;
+  }
+  .root {
+    display: flex;
+    height: 50px;
+    align-items: center;
+  }
+  a {
+    cursor: pointer;
+    color: blue;
+  }
+</style>
+
+<app-change-cwd id="cd"></app-change-cwd>
+
+<div class="root">
+  <h3>Fin Editor</h3>
+  <div style="flex:1; margin-left: 10px"><a href="[[returnUrl]]">[[cwd]]</a></div>
+  <div><a on-click="_onCdClicked">Change Dir</a></div>
+  <div style="margin: 0 10px">[[username]]</div>
+</div>

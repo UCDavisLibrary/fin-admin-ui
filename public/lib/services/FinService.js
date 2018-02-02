@@ -9,9 +9,18 @@ class FinService extends BaseService {
     this.store = FinStore;
   }
 
+  /**
+   * @method get
+   * @description wrapper around api.get()
+   * 
+   * @param {String} path path to container
+   * @param {Boolean} serverManaged should the server managed properties be fetched?
+   * 
+   * @returns {Promise} resolves when store is finished updating request response.
+   */
   get(path, serverManaged=false) {
     let options = {path};
-    console.log(path);
+
     if( !serverManaged ) {
       options.headers = {
         Prefer : api.GET_PREFER.REPRESENTATION_OMIT_SERVER_MANAGED

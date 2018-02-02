@@ -21,14 +21,6 @@ export default class FinEditor extends Mixin(PolymerElement)
       hasError : {
         type : Boolean,
         value : false
-      },
-      returnUrl : {
-        type : String,
-        value : ''
-      },
-      returnText: {
-        type : String,
-        value : ''
       }
     }
   }
@@ -64,14 +56,6 @@ export default class FinEditor extends Mixin(PolymerElement)
     this.shadowRoot.appendChild(ele);
   }
 
-  async _onCwdUpdate(cwd) {
-    let config = this._getApiConfig();
-    let path = await this._getDefinedBy(cwd);
-
-    this.returnUrl = config.host+config.fcBasePath+path;
-    this.returnText = 'Return to '+cwd;
-  }
-
   _onContainerUpdate(e) {
     if( e.state !== 'loaded' ) return;
     this.editor.setValue(e.payload.body);
@@ -101,7 +85,7 @@ export default class FinEditor extends Mixin(PolymerElement)
 
   async _save() {
     let {response} = await api.patch({
-      path : '/',
+      path : this._getCwd(),
       content : this.sparql
     });
 

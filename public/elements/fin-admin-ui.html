@@ -1,7 +1,23 @@
 <style>
   :host {
     display: block;
+    height: 100vh;
+    /* overflow: hidden; */
+  }
+  .layout {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .editor {
+    flex: 1;
+    position: relative;
   }
 </style>
 
-<fin-editor></fin-editor>
+<div class="layout">
+  <app-header></app-header>
+  <div class="editor">
+    <fin-editor></fin-editor>
+  </div>
+</div>

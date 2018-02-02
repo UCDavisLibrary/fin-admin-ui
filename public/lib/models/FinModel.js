@@ -30,6 +30,10 @@ class FinModel extends BaseModel {
     return this.store.getCwd();
   }
 
+  getCwdUrl() {
+    return this.store.getCwdUrl();
+  }
+
   async get(path, allowCached=false) {
     path = await this.getDefinedBy(path);
 

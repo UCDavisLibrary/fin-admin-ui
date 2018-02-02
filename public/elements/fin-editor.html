@@ -1,11 +1,14 @@
 <style>
   :host {
     display: block;
-    height: 100vh;
-    width: 100vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
   #root {
-    height: 100vh;
+    height: 100%;
     flex: 1;
   }
   .right {
@@ -46,10 +49,6 @@
       
       <div>
         <button on-click="_save">Save</button>
-      </div>
-
-      <div style="margin-top: 50px">
-        <a href$="[[returnUrl]]">[[returnText]]</a>
       </div>
     </div>
     <div hidden$="[[!hasError]]" id="error"></div>

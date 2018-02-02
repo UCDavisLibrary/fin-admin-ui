@@ -22,6 +22,10 @@ module.exports = subclass =>
       return this.FinModel.getCwd();
     }
 
+    _getCwdUrl() {
+      return this.FinModel.getCwdUrl();
+    }
+
     _setCwd(cwd) {
       this.FinModel.setCwd(cwd);
     }
