@@ -9,9 +9,17 @@ class FinService extends BaseService {
     this.store = FinStore;
   }
 
-  get(path) {
+  get(path, serverManaged=false) {
+    let options = {path};
+    console.log(path);
+    if( !serverManaged ) {
+      options.headers = {
+        Prefer : api.GET_PREFER.REPRESENTATION_OMIT_SERVER_MANAGED
+      }
+    }
+
     return this._apiRequestHelper({
-      apiCall : api.get({path}),
+      apiCall : api.get(options),
       onLoading : promise => this.store.setContainerLoading(path, promise),
       onLoad : payload => this.store.setContainerLoaded(path, payload),
       onError : error => this.store.setContainerLoading(path, error)

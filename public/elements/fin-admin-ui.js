@@ -22,20 +22,39 @@ export default class FinAdminUi extends Mixin(PolymerElement)
   constructor() {
     super();
     this.active = true;
+
+    // parse config from url
+    let jwt = this._getParameterByName('token');
+    let fcUrl = this._getParameterByName('fcUrl');
+    fcUrl = new URL(fcUrl);
+    let cwd = fcUrl.pathname.replace(this._getApiConfig().fcBasePath, '');
+
+    this._setCwd(cwd);
     this._setApiConfig({
-      host: 'http://localhost:3000',
-      jwt : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpybWVyeiIsImFkbWluIjp0cnVlLCJpYXQiOjE1MTY5OTc3NjksImV4cCI6MTUxNzA4NDE2OSwiaXNzIjoibGlicmFyeS51Y2RhdmlzLmVkdSJ9.dLfeYQP5c_8ir8-aq8wyTLOa5YuAf8sOBSwRs6_cdvQ'
+      host: fcUrl.protocol+'//'+fcUrl.host,
+      jwt : jwt
     });
+
+    // clear the url
+    // window.history.pushState({}, 'Fin Editor', '/');
 
     this.init();
   }
 
   async init() {
-    let container = await this._getContainer('/');
-    console.log(container.payload.body);
+    let container = await this._getContainer(this._getCwd());
+    // console.log(container.payload.body);
   }
 
-
+  _getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
 
 }
 

@@ -1,17 +1,57 @@
 <style>
   :host {
     display: block;
+    height: 100vh;
+    width: 100vw;
   }
   #root {
-    height: 500px;
+    height: 100vh;
+    flex: 1;
+  }
+  .right {
+    width: 30%;
+    overflow: hidden;
+    padding: 20px;
+  }
+
+  #diff {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    border: 1px solid black;
+    font-family: monospace;
+    margin: 10px;
+    white-space: nowrap;
+    overflow: auto;
+  }
+
+  #error {
+    background-color: rgb(255, 220, 220);
+    color: rgb(255, 68, 68);
+    padding: 10px;
+    border: 1px solid rgb(255, 68, 68);
+    font-family: monospace;
+    margin: 10px;
+    white-space: nowrap;
   }
 </style>
 
-<div id="root"></div>
-
 <div style="display: flex">
-  <div id="diff"></div>
-  <div>
-    <button on-click="_save">Save</button>
+  <div id="root"></div>
+
+  <div class="right">
+    <div hidden$="[[hasError]]">
+      <h2>Sparql Preview</h2>
+      <div id="diff"></div>
+      
+      <div>
+        <button on-click="_save">Save</button>
+      </div>
+
+      <div style="margin-top: 50px">
+        <a href$="[[returnUrl]]">[[returnText]]</a>
+      </div>
+    </div>
+    <div hidden$="[[!hasError]]" id="error"></div>
   </div>
 </div>

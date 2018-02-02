@@ -16,9 +16,9 @@
     fs-extra "^4.0.2"
     isomorphic-fetch "^2.2.1"
 
-"@ucd-lib/fin-node-api@^0.2.8":
-  version "0.2.8"
-  resolved "https://registry.yarnpkg.com/@ucd-lib/fin-node-api/-/fin-node-api-0.2.8.tgz#5b94290904941200c55a339dcc51d81503b535f0"
+"@ucd-lib/fin-node-api@^0.2.11":
+  version "0.2.11"
+  resolved "https://registry.yarnpkg.com/@ucd-lib/fin-node-api/-/fin-node-api-0.2.11.tgz#cce5b4e6aaceababa044567cc8b57c0d42ec47fe"
   dependencies:
     clone "^2.1.1"
     jsonld "^0.4.12"

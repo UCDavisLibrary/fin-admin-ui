@@ -6,10 +6,13 @@ class FinStore extends BaseStore {
     super();
 
     this.data = {
-      byPath : {}
+      cwd : '/',
+      byPath : {},
+      definedBy : {}
     };
     this.events = {
-      CONTAINER_UPDATE : 'container-update' 
+      CONTAINER_UPDATE : 'container-update',
+      CWD_UPDATE : 'cwd-update'
     };
   }
 
@@ -32,6 +35,23 @@ class FinStore extends BaseStore {
   _setContainerState(state) {
     this.data.byPath[state.path] = state;
     this.emit(this.events.CONTAINER_UPDATE, state);
+  }
+
+  setCwd(cwd) {
+    this.cwd = cwd;
+    this.emit(this.events.CWD_UPDATE, cwd);
+  }
+
+  getCwd() {
+    return this.cwd;
+  }
+
+  getDefinedBy(path) {
+    return this.data.definedBy[path];
+  }
+
+  setDefinedBy(path, definedBy) {
+    this.data.definedBy[path] = definedBy;
   }
 
 }
