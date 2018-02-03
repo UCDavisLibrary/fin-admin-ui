@@ -34,4 +34,8 @@ module.exports = subclass =>
       return this.FinModel.getDefinedBy(path);
     }
 
+    _getContainerAuthorizations(path) {
+      return this.FinModel.getContainerAuthorizations(path);
+    }
+
   }

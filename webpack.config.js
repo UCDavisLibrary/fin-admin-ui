@@ -7,10 +7,12 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'public')
   },
+  target : 'web',
   node: {
     fs: 'empty',
     net : 'empty',
-    tls : 'empty'
+    tls : 'empty',
+    url : true
   },
   module : {
     rules: [

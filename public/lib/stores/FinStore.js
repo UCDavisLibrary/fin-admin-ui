@@ -21,7 +21,8 @@ class FinStore extends BaseStore {
     this.events = {
       CONTAINER_UPDATE : 'container-update',
       USER_UPDATE : 'user-update',
-      CWD_UPDATE : 'cwd-update'
+      CWD_UPDATE : 'cwd-update',
+      CONFIG_UPDATE : 'config-update'
     };
 
     // see if we have stored values on load
@@ -41,6 +42,7 @@ class FinStore extends BaseStore {
       }
       orgSetConfig(config);
       config = api.getConfig();
+      this.emit(this.events.CONFIG_UPDATE, api.getConfig());
       this.storage.setItem('config', JSON.stringify(api.getConfig()));
     }
   }

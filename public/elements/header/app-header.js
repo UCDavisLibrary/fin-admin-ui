@@ -24,6 +24,10 @@ export default class AppHeader extends Mixin(PolymerElement)
       returnUrl : {
         type : String,
         value : ''
+      },
+      host : {
+        type : String,
+        value : ''
       }
     }
   }
@@ -31,6 +35,11 @@ export default class AppHeader extends Mixin(PolymerElement)
   constructor() {
     super();
     this.active = true;
+  }
+
+  ready() {
+    super.ready();
+    this.host = this._getApiConfig().host;
   }
 
   _onUserUpdate(user) {
@@ -49,6 +58,10 @@ export default class AppHeader extends Mixin(PolymerElement)
     let path = await this._getDefinedBy(cwd);
 
     this.returnUrl = config.host+config.fcBasePath+path;
+  }
+
+  _onConfigUpdate(config) {
+    this.host = config.host;
   }
 
 }

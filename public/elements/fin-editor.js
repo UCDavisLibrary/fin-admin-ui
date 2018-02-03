@@ -21,6 +21,22 @@ export default class FinEditor extends Mixin(PolymerElement)
       hasError : {
         type : Boolean,
         value : false
+      },
+      aclDefinedAt : {
+        type : String,
+        value : ''
+      },
+      user : {
+        type : Object,
+        value : null
+      },
+      permissions : {
+        type : Array,
+        value : () => []
+      },
+      showEdit : {
+        type : Boolean,
+        value : false
       }
     }
   }
@@ -56,11 +72,58 @@ export default class FinEditor extends Mixin(PolymerElement)
     this.shadowRoot.appendChild(ele);
   }
 
+  _onUserUpdate(user) {
+    this.user = user;
+  }
+
   _onContainerUpdate(e) {
     if( e.state !== 'loaded' ) return;
     this.editor.setValue(e.payload.body);
 
     this.originalDoc = e.payload.body;
+  }
+
+  async _onCwdUpdate(cwd) {
+    this._getContainer(cwd);
+  
+    // if( !this.user ) return;
+    // if( !this.user.admin ) return;
+
+    let auth = await this._getContainerAuthorizations(cwd);
+    this.aclDefinedAt = auth.definedAt;
+
+    this.permissions = this._createPermissionsArray(auth.authorization);
+
+    let authContainers = [];
+    for( let key in auth.authorizations ) {
+      authContainers.push({
+        name : key,
+        permissions : this._createPermissionsArray(auth.authorizations[key])
+      });
+    }
+
+    this.authContainers = authContainers;
+    console.log(this.authContainers);
+  }
+
+  _createPermissionsArray(authorization) {
+    let permissions = [];
+    for( let key in authorization ) {
+
+      let permission = {
+        name : key,
+        read : authorization[key]['http://www.w3.org/ns/auth/acl#Read'] ? true : false,
+        write : authorization[key]['http://www.w3.org/ns/auth/acl#Write'] ? true : false
+      }
+
+      if( permission.name === 'http://xmlns.com/foaf/0.1/Agent' ) {
+        permission.name = 'Public';
+      }
+
+      permissions.push(permission);
+    }
+
+    return permissions;
   }
 
   _onEditorChange(e) {
@@ -91,7 +154,10 @@ export default class FinEditor extends Mixin(PolymerElement)
 
     alert(response.statusCode+' '+response.body);
   }
-  
+
+  _toggleEdit() {
+    this.showEdit = !this.showEdit;
+  }
 
 }
 
