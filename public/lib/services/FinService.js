@@ -55,6 +55,18 @@ class FinService extends BaseService {
     return promise;
   }
 
+  async getAuthorizations(path, allowCached=true) {
+    if( allowCached ) {
+      let cached = this.store.getAuthorization(path);
+      if( cached ) return cached;
+    }
+
+    let auth = await api.acl.authorizations({path});
+    this.store.setAuthorization(path, auth);
+
+    return this.store.getAuthorization(path);
+  }
+
 }
 
 module.exports = new FinService();

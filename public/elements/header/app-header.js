@@ -2,7 +2,6 @@ import {Element as PolymerElement} from "@polymer/polymer/polymer-element"
 import template from "./app-header.html"
 
 import FinInterface from "../interfaces/FinInterface"
-import "./app-change-cwd"
 
 export default class AppHeader extends Mixin(PolymerElement)
   .with(EventInterface, FinInterface) {
@@ -44,11 +43,6 @@ export default class AppHeader extends Mixin(PolymerElement)
 
   _onUserUpdate(user) {
     this.username = user.username;
-  }
-
-  _onCdClicked() {
-    this.$.cd.value = this._getCwd();
-    this.$.cd.show();
   }
 
   async _onCwdUpdate(cwd) {

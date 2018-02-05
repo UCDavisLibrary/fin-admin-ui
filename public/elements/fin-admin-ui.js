@@ -1,11 +1,15 @@
 import {Element as PolymerElement} from "@polymer/polymer/polymer-element"
+import "@polymer/iron-pages/iron-pages"
 import template from "./fin-admin-ui.html"
 
 import "../lib"
 import FinInterface from "./interfaces/FinInterface"
 
 import "./fin-editor"
+import "./app-change-cwd"
 import "./header/app-header"
+import "./config/app-config"
+import "./acl/app-acl-editor"
 
 export default class FinAdminUi extends Mixin(PolymerElement)
   .with(EventInterface, FinInterface) {
@@ -16,7 +20,14 @@ export default class FinAdminUi extends Mixin(PolymerElement)
 
   static get properties() {
     return {
-      
+      view : {
+        type : String,
+        value : 'editor'
+      },
+      showBack : {
+        type : Boolean,
+        value : false
+      }
     }
   }
 
@@ -26,6 +37,7 @@ export default class FinAdminUi extends Mixin(PolymerElement)
 
     // parse config from url
     let jwt = this._getParameterByName('token');
+    if( !jwt ) jwt = this._getParameterByName('jwt');
     let fcUrl = this._getParameterByName('fcUrl');
     let config = {};
 
@@ -40,8 +52,23 @@ export default class FinAdminUi extends Mixin(PolymerElement)
 
     this._setApiConfig(config);
 
+    let hash = window.location.hash.replace('#','');
+    window.history.pushState({}, 'Fin Editor', '/#'+hash);
+
     // clear the url
-    window.history.pushState({}, 'Fin Editor', '/');
+    window.addEventListener('hashchange', (e) => this._onHashChange());
+    this._onHashChange();
+  }
+
+  _onHashChange() {
+    this.view = window.location.hash.replace('#', '') || 'editor';
+
+    if( this.view === 'cd' ) {
+      this.$.cd.value = this._getCwd();
+      this.$.cd.search();
+    }
+
+    this.showBack = (this.view !== 'editor');
   }
 
   _getParameterByName(name, url) {

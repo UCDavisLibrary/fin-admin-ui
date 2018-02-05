@@ -18,6 +18,11 @@ export default class FinEditor extends Mixin(PolymerElement)
 
   static get properties() {
     return {
+      visible : {
+        type : Boolean,
+        value : false,
+        observer : '_onVisibleChange'
+      },
       hasError : {
         type : Boolean,
         value : false
@@ -61,6 +66,11 @@ export default class FinEditor extends Mixin(PolymerElement)
     this.editor = editor;
   }
 
+  _onVisibleChange() {
+    if( !this.visible ) return;
+    window.dispatchEvent(new Event('resize'))
+  }
+
   onThemeLoaded(e) {
     var themeId = "#" + e.theme.cssClass;
     this.moveCss(themeId);
@@ -83,27 +93,22 @@ export default class FinEditor extends Mixin(PolymerElement)
     this.originalDoc = e.payload.body;
   }
 
-  async _onCwdUpdate(cwd) {
+  _onCwdUpdate(cwd) {
     this._getContainer(cwd);
-  
-    // if( !this.user ) return;
-    // if( !this.user.admin ) return;
+    this._updateAuthorization();
+  }
 
-    let auth = await this._getContainerAuthorizations(cwd);
+  _onAuthorizationUpdate(e) {
+    if( e.id !== this._getCwd() ) return;
+    this._updateAuthorization();
+  }
+
+  async _updateAuthorization() {
+    let auth = await this._getContainerAuthorizations(this._getCwd());
+    auth = auth.payload;
     this.aclDefinedAt = auth.definedAt;
 
     this.permissions = this._createPermissionsArray(auth.authorization);
-
-    let authContainers = [];
-    for( let key in auth.authorizations ) {
-      authContainers.push({
-        name : key,
-        permissions : this._createPermissionsArray(auth.authorizations[key])
-      });
-    }
-
-    this.authContainers = authContainers;
-    console.log(this.authContainers);
   }
 
   _createPermissionsArray(authorization) {

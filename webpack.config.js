@@ -24,6 +24,12 @@ module.exports = {
               attrs: false
             }
           }
+        },
+        {
+          test: /\.(ttl|sparql)$/,
+          use: {
+            loader: 'raw-loader'
+          }
         }
     ]
   }

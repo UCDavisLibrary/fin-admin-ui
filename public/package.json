@@ -7,9 +7,10 @@
   "flatten": true,
   "private": false,
   "dependencies": {
+    "@polymer/iron-pages": "^3.0.0-pre.7",
     "@polymer/polymer": "^3.0.0-pre.7",
     "@ucd-lib/cork-app-utils": "^2.0.5",
-    "@ucd-lib/fin-node-api": "^0.2.11",
+    "@ucd-lib/fin-node-api": "0.2.14",
     "ace-builds": "^1.2.9",
     "brace": "^0.11.0",
     "escape-html": "^1.0.3"

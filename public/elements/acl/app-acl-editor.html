@@ -1,0 +1,73 @@
+<style>
+  :host {
+    display: block;
+  }
+
+  .permission {
+    background-color: #f8f8f8;
+    padding: 3px;
+    margin: 3px 0;
+    display: flex;
+  }
+
+  .layout {
+    display: flex;
+  }
+
+  a {
+    color: blue;
+    cursor: pointer;
+  }
+  .remove {
+    padding: 10px;
+  }
+</style>
+
+<h1>Acl Editor</h1>
+<div>Defined At: [[aclDefinedAt]]</div>
+
+
+<div class="layout">
+  <div>
+    <h2>Current Permissions</h2>
+    <template is="dom-repeat" items="[[authContainers]]">
+      <div class="layout">
+        <div class="remove"><a on-click="_delete" index$="[[index]]">Remove</a></div>
+
+        <div>
+          <div>[[item.name]]</div>
+          <div>
+            <div style="display:flex">
+              <div style="width:50%">User</div>
+              <div>Access</div>
+            </div>
+            <template is="dom-repeat" items="[[item.permissions]]">
+              <div class="permission">
+                <div style="width:50%">[[item.name]]</div>
+                <span hidden$="[[item.read]]">-</span>
+                <span hidden$="[[!item.read]]">r</span>
+                <span hidden$="[[item.write]]">-</span>
+                <span hidden$="[[!item.write]]">w</span>
+              </div>
+            </template>
+          </div>
+
+        </div>
+      </div>
+      
+    </template>
+  </div>
+
+  <div>
+    <h2>Add Permissions</h2>
+    <div>
+      <div><input type="text" placeholder="Username" id="username"/></div>
+      <div>For public access, set the username to: http://xmlns.com/foaf/0.1/Agent</div>
+    </div>
+    <div><input type="checkbox" id="createRead"/><label>Read</label></div>
+    <div><input type="checkbox" id="createWrite"/><label>Write</label></div>
+    <button on-click="_create">Create Permission</button>
+  </div>
+
+</div>
+

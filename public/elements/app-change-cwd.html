@@ -1,0 +1,47 @@
+<style>
+  :host {
+    display: block;
+  }
+  .layout {
+    display : flex;
+    justify-content: center;
+  }
+  .content {
+    display: block;
+    margin-top: 50px;
+    padding: 10px;
+  }
+  input {
+    width : 350px;
+    padding : 10px;
+    font-size: 16px;
+  }
+  .error {
+    color: rgb(255, 68, 68);
+  }
+  a {
+    cursor: pointer;
+    color: blue;
+  }
+</style>
+
+<div class="layout">
+  <div class="content">
+    <div style="text-align: right">
+      <a on-click="hide">Close</a>
+    </div>
+    <input id="input" 
+          type="text" 
+          placeholder="Change CWD" 
+          on-keyup="_onKeyUp" />
+
+    <div hidden$="[[!hasError]]" class="error">
+      [[errorMsg]]
+    </div>
+    <div hidden$="[[hasError]]">
+      <template is="dom-repeat" items="{{children}}">
+        <div><a on-click="_onPathClicked">[[item]]</a></div>
+      </template>
+    </div>
+  </div>
+</div>

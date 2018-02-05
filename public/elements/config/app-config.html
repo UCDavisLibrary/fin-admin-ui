@@ -1,0 +1,42 @@
+<style>
+  :host {
+    display: block;
+  }
+  .layout {
+    display : flex;
+  }
+</style>
+
+<h1>App Config</h2>
+
+<div class="layout">
+  <div>
+    <div>
+      <h4>Host</h4>
+      <input type="text" id="host" />
+    </div>
+
+    <div>
+      <h4>Fedora Base Path</h4>
+      <input type="text" id="fcBasePath" value="" />
+    </div>
+
+    <div>
+      <h4>JWT</h4>
+      <div><input type="text" id="jwt" /></div>
+      <div>Or click login below to update token with provided host</div>
+    </div>
+
+    <button on-click="_save">Save</button>
+
+    <button on-click="_login">Login</button>
+  </div>
+
+  <div>
+    <div>Username: [[username]]</div>
+    <div hidden$="[[!isAdmin]]">Admin: [[isAdmin]]</div>
+    <div>Jwt Issued At: [[issued]]</div>
+    <div>Jwt Expires: [[expires]]</div>
+  </div>
+
+</div>

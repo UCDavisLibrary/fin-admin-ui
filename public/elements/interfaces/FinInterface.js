@@ -34,8 +34,36 @@ module.exports = subclass =>
       return this.FinModel.getDefinedBy(path);
     }
 
-    _getContainerAuthorizations(path) {
-      return this.FinModel.getContainerAuthorizations(path);
+    _getContainerAuthorizations(path, allowCached) {
+      return this.FinModel.getContainerAuthorizations(path, allowCached);
+    }
+
+    _removeContainer(path) {
+      return this.FinModel.removeContainer(path);
+    }
+
+    _addContainerAuthorization(options) {
+      return this.FinModel.addContainerAuthorizations(options);
+    }
+
+    _createPermissionsArray(authorization) {
+      let permissions = [];
+      for( let key in authorization ) {
+  
+        let permission = {
+          name : key,
+          read : authorization[key]['http://www.w3.org/ns/auth/acl#Read'] ? true : false,
+          write : authorization[key]['http://www.w3.org/ns/auth/acl#Write'] ? true : false
+        }
+  
+        if( permission.name === 'http://xmlns.com/foaf/0.1/Agent' ) {
+          permission.name = 'Public';
+        }
+  
+        permissions.push(permission);
+      }
+  
+      return permissions;
     }
 
   }

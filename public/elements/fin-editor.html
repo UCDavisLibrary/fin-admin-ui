@@ -13,8 +13,10 @@
   }
   .right {
     width: 30%;
-    overflow: hidden;
+    overflow: auto;
     padding: 20px;
+    height: 100%;
+    box-sizing: border-box;
   }
 
   #diff {
@@ -66,7 +68,7 @@
     <div hidden$="[[!hasError]]" id="error"></div>
 
     <div>
-      <h3>Permissions <small>defined at: [[aclDefinedAt]]</small></h3>
+      <h3>Permissions<br /><small>Defined at: [[aclDefinedAt]]</small></h3>
       <div>
           <div style="display:flex">
               <div style="width:50%">User</div>
@@ -78,35 +80,13 @@
             <span hidden$="[[item.read]]">-</span>
             <span hidden$="[[!item.read]]">r</span>
             <span hidden$="[[item.write]]">-</span>
-            <span hidden$="[[!item.write]]">r</span>
+            <span hidden$="[[!item.write]]">w</span>
           </div>
         </template>
       </div>
 
-      <button on-click="_toggleEdit">Edit</button>
+      <a href="#acl">Edit</a>
 
-      <div hidden$="[[!showEdit]]">
-        <template is="dom-repeat" items="[[authContainers]]">
-          <div>[[item.name]]</div>
-          <div>
-            <div style="display:flex">
-              <div style="width:50%">User</div>
-              <div>Access</div>
-            </div>
-            <template is="dom-repeat" items="[[item.permissions]]">
-              <div class="permission">
-                <div style="width:50%">[[item.name]]</div>
-                <span hidden$="[[item.read]]">-</span>
-                <span hidden$="[[!item.read]]">r</span>
-                <span hidden$="[[item.write]]">-</span>
-                <span hidden$="[[!item.write]]">r</span>
-              </div>
-            </template>
-          </div>
-        </template>
-      </div>
-
-      
     </div>
   </div>
 </div>

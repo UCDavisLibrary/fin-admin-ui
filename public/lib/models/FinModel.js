@@ -73,8 +73,16 @@ class FinModel extends BaseModel {
     return path;
   }
   
-  async getContainerAuthorizations(path) {
-    return api.acl.authorizations({path});
+  async getContainerAuthorizations(path, allowCached=true) {
+    return this.service.getAuthorizations(path, allowCached);
+  }
+
+  removeContainer(path) {
+    return api.delete({path});
+  }
+
+  addContainerAuthorizations(options) {
+    return api.acl.add(options);
   }
 
 }
