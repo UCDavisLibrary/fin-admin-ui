@@ -62,7 +62,6 @@ export default class AppConfig extends Mixin(PolymerElement)
 
 
   _onConfigUpdate(e) {
-    console.log(e);
     this.host = e.host || '';
     this.fcBasePath = e.fcBasePath || '';
     this.jwt = e.jwt || '';

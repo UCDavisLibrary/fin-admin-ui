@@ -29,7 +29,7 @@ class FinStore extends BaseStore {
 
     // see if we have stored values on load
     let cwd = this.storage.getItem('cwd');
-    if( cwd ) this.setCwd(cwd);
+    this.setCwd(cwd || this.data.cwd); // we just want to fire the update event
 
     let config = this.storage.getItem('config');
     if( config ) api.setConfig(JSON.parse(config));

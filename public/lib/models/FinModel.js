@@ -74,11 +74,15 @@ class FinModel extends BaseModel {
   }
   
   async getContainerAuthorizations(path, allowCached=true) {
+    path = await this.getDefinedBy(path);
     return this.service.getAuthorizations(path, allowCached);
   }
 
   removeContainer(path) {
-    return api.delete({path});
+    return api.delete({
+      path,
+      permanent : true
+    });
   }
 
   addContainerAuthorizations(options) {
