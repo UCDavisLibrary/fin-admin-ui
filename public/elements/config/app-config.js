@@ -85,7 +85,7 @@ export default class AppConfig extends Mixin(PolymerElement)
   _login() {
     if( !this.host ) return alert('You must provide a Fin host');
 
-    let authUrl = new URL(this.host+'/auth/cas');
+    let authUrl = new URL(this.host+'/auth/cas/login');
     authUrl.searchParams.set('cliRedirectUrl', window.location.href);
     authUrl.searchParams.set('provideJwt', 'true');
     authUrl.searchParams.set('force', 'true');
