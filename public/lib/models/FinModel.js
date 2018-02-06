@@ -89,6 +89,11 @@ class FinModel extends BaseModel {
     return api.acl.add(options);
   }
 
+  async getContainerVersions(path, allowCached=true) {
+    // path = await this.getDefinedBy(path);
+    return this.service.getVersions(path, allowCached);
+  }
+
 }
 
 module.exports = new FinModel();

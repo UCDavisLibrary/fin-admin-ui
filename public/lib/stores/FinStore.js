@@ -16,7 +16,8 @@ class FinStore extends BaseStore {
       cwd : '/',
       byPath : {},
       definedBy : {},
-      authorization : {}
+      authorization : {},
+      versions : {}
     };
 
     this.events = {
@@ -24,7 +25,8 @@ class FinStore extends BaseStore {
       USER_UPDATE : 'user-update',
       CWD_UPDATE : 'cwd-update',
       CONFIG_UPDATE : 'config-update',
-      AUTHORIZATION_UPDATE : 'authorization-update'
+      AUTHORIZATION_UPDATE : 'authorization-update',
+      VERSIONS_UPDATE : 'versions-update'
     };
 
     // see if we have stored values on load
@@ -151,6 +153,15 @@ class FinStore extends BaseStore {
 
   getAuthorization(path) {
     return this.data.authorization[path];
+  }
+
+  setVersions(path, versions) {
+    this.data.versions[path] = {id: path, payload: versions};
+    this.emit(this.events.VERSIONS_UPDATE, this.data.versions[path]);
+  }
+
+  getVersions(path) {
+    return this.data.versions[path];
   }
 
 }

@@ -1,0 +1,9 @@
+<style>
+  :host {
+    display: block;
+  }
+</style>
+
+<template is="dom-repeat" items="[[versions]]">
+  <div>[[item.label]]<span hidden$="[[!item.created]]"> -  created [[item.created]]</span></div>
+</template>

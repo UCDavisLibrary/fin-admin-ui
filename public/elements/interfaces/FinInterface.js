@@ -46,6 +46,10 @@ module.exports = subclass =>
       return this.FinModel.addContainerAuthorizations(options);
     }
 
+    _getContainerVersions(path, allowCached) {
+      return this.FinModel.getContainerVersions(path, allowCached);
+    }
+
     _createPermissionsArray(authorization) {
       let permissions = [];
       for( let key in authorization ) {

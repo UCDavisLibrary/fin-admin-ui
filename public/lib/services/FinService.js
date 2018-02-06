@@ -67,6 +67,23 @@ class FinService extends BaseService {
     return this.store.getAuthorization(path);
   }
 
+  async getVersions(path, allowCached=true) {
+    if( allowCached ) {
+      let cached = this.store.getVersions(path);
+      if( cached ) return cached;
+    }
+
+    let {response, body} = await api.getVersions({
+      path: path,
+      headers : {
+        Accept : api.RDF_FORMATS.JSON_LD
+      }
+    });
+    this.store.setVersions(path, JSON.parse(body || '[]'));
+
+    return this.store.getVersions(path);
+  }
+
 }
 
 module.exports = new FinService();

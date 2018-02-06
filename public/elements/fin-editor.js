@@ -8,6 +8,7 @@ import 'brace/mode/turtle';
 import 'brace/theme/monokai';
 
 import FinInterface from "./interfaces/FinInterface"
+import "./version/app-version-info"
 
 export default class FinEditor extends Mixin(PolymerElement)
   .with(EventInterface, FinInterface) {
@@ -28,6 +29,10 @@ export default class FinEditor extends Mixin(PolymerElement)
         value : false
       },
       aclDefinedAt : {
+        type : String,
+        value : ''
+      },
+      cwd : {
         type : String,
         value : ''
       },
@@ -94,6 +99,7 @@ export default class FinEditor extends Mixin(PolymerElement)
   }
 
   _onCwdUpdate(cwd) {
+    this.cwd = cwd;
     this._getContainer(cwd);
     this._updateAuthorization();
   }
